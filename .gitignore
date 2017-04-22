@@ -3,3 +3,5 @@ storage
 !.gitkeep
 .env
 npm-debug.log
+public/bower/
+bower_components

@@ -18,13 +18,27 @@ Route.group('auth', () => {
 
     Route.on('/resetPassword').render('auth/resetPassword')
     Route.post('/resetPassword', 'Auth/AuthCtrl.resetPassword')
-
-    Route.get('/logout', 'Auth/AuthCtrl.logout')
 })
 
 //Dash Routes
 Route.group('dash', () => {
-    Route.get('/', 'Dash/BaseCtrl.show')
+    // Dash Landing
+    Route.get('/', 'Dash/DashCtrl.viewDash')
+
+    //Logout
+    Route.get('/logout', 'Auth/AuthCtrl.logout')
+
+    //User Management
+    Route.get('/users', 'Dash/UserCtrl.viewUsers')
+    Route.get('/user', 'Dash/UserCtrl.viewUser')
+    Route.get('/profile', 'Dash/UserCtrl.viewProfile')
+
+    Route.post('/addUser', 'Dash/UserCtrl.addUser')
+    Route.post('/updateUser', 'Dash/UserCtrl.updateUser')
+
+    //Log Management    
+    Route.get('/logs', 'Dash/LogCtrl.viewLogs')
+
 }).middlewares(['auth']);
 
 //API Routes

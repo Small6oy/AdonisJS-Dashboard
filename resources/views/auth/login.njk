@@ -8,31 +8,23 @@
                 {{ form.open({action: 'Auth/AuthCtrl.login'}) }}
                     <h1>Login Form</h1>
                     {{ csrfField }}
-
                     <div>                
                         {{ form.text('username','', {class: 'form-control', placeholder: 'Username'}) }}
                     </div>
-
                     <div>                
                         {{ form.password('password','', {class: 'form-control', placeholder: 'Password'}) }}
                     </div>
-
                     <div>
                         {{ form.submit('Log in','', {class: 'btn btn-default submit'}) }}
                         <a class="reset_pass" href="/resetPassword">Lost your password?</a>
                     </div>
-
                     <div class="clearfix"></div>
                     <div class="separator">
                     <p class="change_link">New to site?
                         <a href="/register" class="to_register"> Create Account </a>
                     </p>
-
                     <div class="clearfix"></div>
-                    <br />
-
                     <div>
-
                 {{ form.close() }}            
             </section>
         </div>

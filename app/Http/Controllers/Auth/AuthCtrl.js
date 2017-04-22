@@ -3,27 +3,8 @@
 const User = use('App/Model/User');
 const Role = use('App/Model/Role');
 const userService = use('App/Services/UserService');
-const encUserSessionKey = use('Encryption').encrypt('user');
 
 class AuthCtrl {
-
-    *
-    dashboard(request, response) {
-
-        const user = yield userService.getLoggedInUser(request);
-
-        const view = yield response.view('backoffice/dashboard', {
-            user: user,
-            roles: user.roles
-        });
-        response.send(view);
-    }
-
-    *
-    getAddUser(request, response) {
-        var view = yield response.view('backoffice/add_user');
-        response.send(view);
-    }
 
     *
     register(request, response) {
@@ -37,9 +18,9 @@ class AuthCtrl {
         var user = yield userService.register(username, password, email, userRole);
         if (user) {
             return response.redirect('/');
+            //TODO return to you are registered page
         } else {
             //TODO flash messages
-
         }
     }
 
@@ -55,8 +36,10 @@ class AuthCtrl {
         if (user) {
             yield request.session.put('encUserSessionKey', user.id);
             return response.redirect('/');
+        } else {
+            //TODO flash messages
+            return response.redirect('/login');
         }
-        return response.redirect('/login');
     }
 
     *

@@ -1,9 +1,12 @@
 'use strict';
 
 const co = use('co');
-const User = use('App/Model/User');
-const Role = use('App/Model/Role');
 const Hash = use('Hash');
+const Menu = use('App/Model/Menu');
+const Role = use('App/Model/Role');
+const User = use('App/Model/User');
+const View = use('Adonis/Src/View');
+const UserDetails = use('App/Model/UserDetails');
 const encUserSessionKey = use('Encryption').encrypt('user');
 
 module.exports = {
@@ -52,10 +55,29 @@ module.exports = {
         const user = yield this.getLoggedInUser(request);
 
         if (user) {
+            //Define Global Variables since you are logged in
+            View.global('user', function() {
+                return user
+            })
+
+            const userDetail = yield this.getUserDetails(user.id);
+            View.global('userDetail', function() {
+                return userDetail
+            })
+
+            const menu = yield this.getUserMenu(user);
+            View.global('menu', function() {
+                return menu
+            })
+
+            const messages = yield this.getUserMessages(user);
+            View.global('messages', function() {
+                return messages
+            })
+
             yield next;
         } else {
-            response.statusCode = 401;
-            const view = yield response.view('401');
+            const view = yield response.view('auth/login');
             response.send(view);
         }
     },
@@ -68,7 +90,6 @@ module.exports = {
             return null;
         } else {
             const user = yield User.find(userId);
-            console.log(user)
 
             if (user) {
                 return user;
@@ -78,7 +99,31 @@ module.exports = {
         }
     },
 
+    getLoggedInUserDetails: function*(request) {
+        const user_id = yield request.session.get('encUserSessionKey');
+        const user_details = yield this.getUserDetails(user_id);
+        return user_details;
+    },
+
+    getUserDetails: function*(user_id) {
+        const user_details = yield UserDetails.query().where('user_id', user_id).first();
+        return user_details;
+    },
+
+    getUserMenu: function*(user) {
+        const menu = yield Menu.all();
+        let user_menu = menu.filter(function(item) {
+            return user.role_id >= item.role_level;
+        })
+        return user_menu;
+    },
+
+    getUserMessages: function*(user) {
+        let messages = [];
+        return messages;
+    },
+
     logout: function*(session) {
-        return yield session.forget(encUserSessionKey);
+        return yield session.forget('encUserSessionKey');
     }
 };

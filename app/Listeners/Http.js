@@ -15,6 +15,18 @@ Http.handleError = function*(error, request, response) {
     const status = error.status || 500
 
     /**
+     * DEVELOPMENT REPORTER
+     */
+    if (Env.get('NODE_ENV') === 'development') {
+        const youch = new Youch(error, request.request)
+        const type = request.accepts('json', 'html')
+        const formatMethod = type === 'json' ? 'toJSON' : 'toHTML'
+        const formattedErrors = yield youch[formatMethod]()
+        response.status(status).send(formattedErrors)
+        return
+    }
+
+    /**
      * Custom Error Templates
      */
 
@@ -32,18 +44,6 @@ Http.handleError = function*(error, request, response) {
     }
     if (error.status === 500) {
         yield response.status(500).sendView('errors/500')
-        return
-    }
-
-    /**
-     * DEVELOPMENT REPORTER
-     */
-    if (Env.get('NODE_ENV') === 'development') {
-        const youch = new Youch(error, request.request)
-        const type = request.accepts('json', 'html')
-        const formatMethod = type === 'json' ? 'toJSON' : 'toHTML'
-        const formattedErrors = yield youch[formatMethod]()
-        response.status(status).send(formattedErrors)
         return
     }
 

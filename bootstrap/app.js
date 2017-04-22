@@ -4,11 +4,6 @@
 |--------------------------------------------------------------------------
 | Application Providers
 |--------------------------------------------------------------------------
-|
-| Here we configure the providers required to run adonis application. They
-| are registered only once and can be used inside any file using `use`
-| keyword.
-|
 */
 const providers = [
     'adonis-framework/providers/ConfigProvider',
@@ -37,10 +32,6 @@ const providers = [
 |--------------------------------------------------------------------------
 | Ace Providers
 |--------------------------------------------------------------------------
-|
-| Ace providers are specific to ace, and are not registered when starting
-| http server. It helps in reducing boot time.
-|
 */
 const aceProviders = [
     'adonis-lucid/providers/CommandsProvider',
@@ -57,11 +48,6 @@ const aceProviders = [
 |--------------------------------------------------------------------------
 | Namespace Aliases
 |--------------------------------------------------------------------------
-|
-| Each provider is registered with a long unique namespace. Here we alias
-| them with a short unique name to keep our import statements short and
-| sweet.
-|
 */
 const aliases = {
     Command: 'Adonis/Src/Command',
@@ -85,10 +71,6 @@ const aliases = {
 |--------------------------------------------------------------------------
 | Ace Commands
 |--------------------------------------------------------------------------
-|
-| Ace Commands are also are registered inside the IoC container. Here we
-| register with Ace Kernel using their unique namespace.
-|
 */
 const commands = [
     'App/Commands/Greet',
