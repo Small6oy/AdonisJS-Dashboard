@@ -30,14 +30,21 @@
 
     <!-- jQuery -->
     <script src="bower/jquery/dist/jquery.min.js"></script>
-    <!-- Bootstrap -->
-    <script src="bower/bootstrap/dist/js/bootstrap.min.js"></script>
-    <!-- FastClick -->
-    <script src="bower/fastclick/lib/fastclick.js"></script>
     <!-- NProgress -->
     <script src="bower/nprogress/nprogress.js"></script>
 
     <!-- Custom Theme Scripts -->
-    <script src="js/custom.min.js"></script>
+    <script>
+      // NProgress
+      if (typeof NProgress != 'undefined') {
+          $(document).ready(function() {
+              NProgress.start();
+          });
+
+          $(window).load(function() {
+              NProgress.done();
+          });
+      }
+    </script>
   </body>
 </html>

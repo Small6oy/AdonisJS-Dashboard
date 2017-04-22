@@ -1,44 +1,27 @@
 {% extends 'master/auth' %}
 
 {% block content %} 
-<div>
-    <div class="login_wrapper">
-        <div class="animate form login_form">
-            <section class="login_content">
-                {{ form.open({action: 'Auth/AuthCtrl.register'}) }}
-                    <h1>Register</h1>
-                    {{ csrfField }}
-
-                    <div>
-                        {{ form.text('username','', {class: 'form-control', placeholder: 'Username'}) }}
-                    </div>
-
-                    <div>
-                        {{ form.email('email','', {class: 'form-control', placeholder: 'Email Address'}) }}
-                    </div>
-
-                    <div>
-                        {{ form.password('password','', {class: 'form-control', placeholder: 'Password'}) }}
-                    </div>
-                    
-                    <div>
-                        {{ form.submit('Submit','', {class: 'btn btn-default submit'}) }}
-                        {{ form.resetButton('Clear','', {class: 'btn btn-default submit'}) }}
-                    </div>
-
-                    <div class="clearfix"></div>
-                    <div class="separator">
-                        <p class="change_link">Already a member ?
-                            <a href="/login" class="to_register"> Log in </a>
-                        </p>
-
-                        <div class="clearfix"></div>
-                        <br />
-                    <div>
-
-                {{ form.close() }}            
-            </section>
+    {{ form.open({action: 'Auth/AuthCtrl.register'}) }}
+        <h1>Register</h1>
+        {{ csrfField }}
+        <div>
+            {{ form.text('username','', {class: 'form-control', placeholder: 'Username'}) }}
         </div>
-    </div>
-</div>
+        <div>
+            {{ form.email('email','', {class: 'form-control', placeholder: 'Email Address'}) }}
+        </div>
+        <div>
+            {{ form.password('password','', {class: 'form-control', placeholder: 'Password'}) }}
+        </div>        
+        <div>
+            {{ form.submit('Submit','', {class: 'btn btn-default submit'}) }}
+            {{ form.resetButton('Clear','', {class: 'btn btn-default submit'}) }}
+        </div>
+        <div class="clearfix"></div>
+        <div class="separator">
+            <p class="change_link">Already a member ?
+                <a href="/login" class="to_register"> Log in </a>
+            </p>
+        <div>
+    {{ form.close() }}
 {% endblock %}
